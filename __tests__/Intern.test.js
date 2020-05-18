@@ -1,8 +1,23 @@
-const Potion = require('../lib/Potion.js');
+const Employee = require('../lib/Employee');
+const Intern = require('../lib/Intern');
 
-test('creates a health potion object', () => {
-  const potion = new Potion('health');
+test('create an intern object', () => {
+  const intern = new Intern('John', 9987, 'john@mail.com', 'CAU');
 
-  expect(potion.name).toBe('health');
-  expect(potion.value).toEqual(expect.any(Number));
+  expect(intern.name).toBe('John');
+  expect(intern.id).toEqual(expect.any(Number));
+  expect(intern.email).toEqual(expect.any(String));
+  expect(intern.school).toEqual(expect.any(String));
+});
+
+test('Intern school is returned', () => {
+  const intern = new Intern('John', 9987, 'john@mail.com', 'CAU');
+
+  expect(intern.getSchool()).toBe('CAU');
+});
+
+test('Intern is the role returned', () => {
+  const intern = new Intern('John', 9987, 'john@mail.com', 'CAU');
+
+  expect(intern.getRole()).toBe('Intern');
 });

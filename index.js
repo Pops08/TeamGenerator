@@ -5,6 +5,7 @@ const Intern = require('./lib/Intern');
 const inquirer = require('inquirer');
 const createPage = require('./src/TeamRoster.js');
 const fs = require('fs');
+const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const fullTeam = [];
 
@@ -61,7 +62,10 @@ const createEng = () => {
         name: 'engEmail',
         message: 'What Is The Engineers Email?',
         validate: engEmail => {
-            if (engEmail) {
+            if (!(engEmail.match(mailformat)) ) {
+                return 'Please Enter A Valid Email'
+            }
+            else if (engEmail) {
                 return true;
             }
             else {
@@ -92,23 +96,24 @@ const createEng = () => {
       },
 
     ]).then(createTeam => {
+
+        //Create Engineer Object Instance
         const newEngineer = new Engineer(createTeam.engName, createTeam.engID, createTeam.engEmail,createTeam.engGH);
+
+        fullTeam.push(newEngineer);
+
         if(createTeam.teamLst == "Engineer"){
-            fullTeam.push(newEngineer);
-            console.log(fullTeam);
+            //Call Create Engineer Function
             createEng();
         }
         else if (createTeam.teamLst == "Intern") {
-            fullTeam.push(newEngineer);
-            console.log(fullTeam)
+            //Call Create Intern Function
             createIntern();
         }
         else {
-            fullTeam.push(newEngineer.name, newEngineer.id,newEngineer.email, newEngineer.gitHub);
-            console.log(fullTeam)
             //write the file
             const newTR = createPage(fullTeam);
-            //fs.writeFile('./dist/TeamRoster.html', newTR, funcCallback);
+            fs.writeFile('./dist/TeamRoster.html', newTR, funcCallback);
         }
        
     }
@@ -160,7 +165,10 @@ const createIntern = () => {
         name: 'intEmail',
         message: 'What Is The Interns Email?',
         validate: intEmail => {
-            if (intEmail) {
+            if (!(intEmail.match(mailformat)) ) {
+                return 'Please Enter A Valid Email'
+            }
+            else if (intEmail) {
                 return true;
             }
             else {
@@ -191,20 +199,21 @@ const createIntern = () => {
       },
 
     ]).then(createTeam => {
-        const intern = new Intern(createTeam.intName, createTeam.intID, createTeam.intEmail,createTeam.engSchool);
+        //Create Intern Object Instance
+        const intern = new Intern(createTeam.intName, createTeam.intID, createTeam.intEmail,createTeam.intSchool);
+
+        //Add Intern Obj To Array
+        fullTeam.push(intern);
+
         if(createTeam.teamLst == "Engineer"){
-            fullTeam.push(engineer);
-            console.log(fullTeam);
+            //Call The Create Engineer Function
             createEng();
         }
         else if (createTeam.teamLst == "Intern") {
-            fullTeam.push(engineer);
-            console.log(fullTeam)
+            //Call The Create Intern Function
             createIntern();
         }
         else {
-            fullTeam.push(engineer);
-            console.log(fullTeam)
             //write the file
             const newTR = createPage(fullTeam);
             fs.writeFile('./dist/TeamRoster.html', newTR, funcCallback);
@@ -214,9 +223,6 @@ const createIntern = () => {
 
     )
 }
-
-
-
 
 
 const createManager = () => {
@@ -263,7 +269,10 @@ const createManager = () => {
         name: 'manEmail',
         message: 'What Is The Team Manager Email?',
         validate: manEmail => {
-            if (manEmail) {
+            if (!(manEmail.match(mailformat)) ) {
+                return 'Please Enter A Valid Email'
+            }
+            else if (manEmail){
                 return true;
             }
             else {
@@ -296,38 +305,23 @@ const createManager = () => {
         choices: ["Engineer", "Intern", "None. I'm Finished!"]
       },
 
-
-
-
     ])
 }
 
 createManager().then(createTeam => {
-    //const{name,ID, email,ON} = createTeam
-        //fullTeam.push(createTeam);
-    // const managerName = createTeam.manName
-    // const managerId = createTeam.manID
-    // const managerEmail = createTeam.manEmail
-    // const managerOfficeNumber = createTeam.manON;
-    //const manager = new Manager(managerName, managerId, managerEmail, managerOfficeNumber)
     
+    //Create Manager Obj Instance
     const manager = new Manager(createTeam.manName,createTeam.manID, createTeam.manEmail,createTeam.manON);
-    //console.log('Values: ' + createTeam.manName,createTeam.manID, createTeam.manEmail,createTeam.manON);
-    //console.log(createTeam);
+
+    //Push New Obj to Array
     fullTeam.push(manager);
-    console.log(fullTeam);
-    //console.log('New Manager: ' + newManager);
-
-    
-    console.log('Team: ', fullTeam);
-
 
     if(createTeam.teamLst == "Engineer"){
-        //fullTeam.push(newManager);
+        //Call The Create Engineer Function
         createEng();
     }
     else if (createTeam.teamLst == "Intern") {
-        //Start the Intern Creation Function
+        //Call The Create Intern Function
         createIntern();
     }
     else {

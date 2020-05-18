@@ -20,7 +20,6 @@ var htmlTemplate = `<!DOCTYPE html>
 
 // function to generate markdown for Team Roster HTML
 function createTeamRoster(data) {
-  //console.log('Data Returned: ' + data);
 
     for (let i = 0; i < data.length; i++) {
         let teamRole = data[i].getRole();
@@ -32,15 +31,14 @@ function createTeamRoster(data) {
             <h4 class="card-title">${data[i].name}</h4>
             <h6 class="card-subtitle mb-2 text-muted">${data[i].getRole()}</h6>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">ID: ${data[i].ID}</li>
-                <li class="list-group-item">Email:<a href="mailto:${data[i].email}">${data[i].email}</a></li>
-                <li class="list-group-item">Office Number:${data[i].officeNumber}</li>
+                <li class="list-group-item">ID: ${data[i].id}</li>
+                <li class="list-group-item">Email: <a href="mailto:${data[i].email}">${data[i].email}</a></li>
+                <li class="list-group-item">Office Number: ${data[i].officeNumber}</li>
               </ul>
         </div>
     </div>
               `;
               htmlTemplate += updateTemplate;
-              console.log(htmlTemplate)
         }
 
         else if (teamRole == "Engineer") {
@@ -50,15 +48,14 @@ function createTeamRoster(data) {
             <h4 class="card-title">${data[i].name}</h4>
             <h6 class="card-subtitle mb-2 text-muted">${data[i].getRole()}</h6>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">ID: ${data[i].ID}</li>
-                <li class="list-group-item">Email:<a href="mailto:${data[i].email}">${data[i].email}</a></li>
-                <li class="list-group-item">GitHub:${data[i].gitHub}</li>
+                <li class="list-group-item">ID: ${data[i].id}</li>
+                <li class="list-group-item">Email: <a href="mailto:${data[i].email}">${data[i].email}</a></li>
+                <li class="list-group-item">GitHub: ${data[i].gitHub}</li>
               </ul>
         </div>
     </div>
               `;
               htmlTemplate += updateTemplate;
-              console.log(htmlTemplate)
         }
 
         else if (teamRole == "Intern") {
@@ -68,8 +65,8 @@ function createTeamRoster(data) {
             <h4 class="card-title">${data[i].name}</h4>
             <h6 class="card-subtitle mb-2 text-muted">${data[i].getRole()}</h6>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">ID: ${data[i].ID}</li>
-                <li class="list-group-item">Email:<a href="mailto:${data[i].email}"> ${data[i].email}</a></li>
+                <li class="list-group-item">ID: ${data[i].id}</li>
+                <li class="list-group-item">Email: <a href="mailto:${data[i].email}"> ${data[i].email}</a></li>
                 <li class="list-group-item">School: ${data[i].school}</li>
               </ul>
         </div>
@@ -86,46 +83,11 @@ function createTeamRoster(data) {
         </body>
 
         </html>`
+        console.log(htmlTemplate)
 
 
 
     return htmlTemplate;
 }
-
-// function populateData(data) {
-
-//     for (let i = 0; i < data.length; i++) {
-//         let teamRole = data[i].getRole();
-//         if (teamRole == "Manager") {
-//             htmlTemplate += `
-//               <div class="row justify-content-center">
-//     <div class="card col-sm-3 col-md-3 pb-2 m-2">
-//         <div class="card-body">
-//             <h4 class="card-title">${data[i].manName}</h4>
-//             <h6 class="card-subtitle mb-2 text-muted">${data[i].getRole}</h6>
-//             <ul class="list-group list-group-flush">
-//                 <li class="list-group-item">ID: ${data[i].manID}</li>
-//                 <li class="list-group-item">Email:</li>
-//                 <li class="list-group-item">Office Number: </li>
-//               </ul>
-//         </div>
-//     </div>
-//               `;
-//         }
-//     }
-
-// }
-
-// function engCard(data) {
-//     console.log(Intern.getSchool());
-
-//     for (let i = 0; i < data.length; i++) {
-//         let teamRole = data[i].getRole();
-//         if (teamRole == "Manager") {
-
-//         }
-//     }
-
-// }
 
 module.exports = createTeamRoster;
