@@ -21,9 +21,11 @@ var htmlTemplate = `<!DOCTYPE html>
 // function to generate markdown for Team Roster HTML
 function createTeamRoster(data) {
 
+    //Loop through each object in argument
     for (let i = 0; i < data.length; i++) {
         let teamRole = data[i].getRole();
 
+        //Add Manager Card To HTML
         if (teamRole == "Manager") {
             let updateTemplate = `
                 <div class="card col-sm-3 col-md-3 pb-2 m-2">
@@ -41,6 +43,7 @@ function createTeamRoster(data) {
               htmlTemplate += updateTemplate;
         }
 
+        //Add Engineer Card To HTML
         else if (teamRole == "Engineer") {
             let updateTemplate = `
                 <div class="card col-sm-3 col-md-3 pb-2 m-2">
@@ -58,6 +61,7 @@ function createTeamRoster(data) {
               htmlTemplate += updateTemplate;
         }
 
+        //Add Intern Card To HTML
         else if (teamRole == "Intern") {
             let updateTemplate = `
                 <div class="card col-sm-3 col-md-3 pb-2 m-2">
@@ -73,10 +77,10 @@ function createTeamRoster(data) {
     </div>
               `;
               htmlTemplate += updateTemplate;
-              console.log(htmlTemplate)
         }
         
     }
+    //Add Closing Tags To HTML Template
     htmlTemplate += `
         </div>
 
