@@ -3,7 +3,7 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const inquirer = require('inquirer');
-const createPage = require("./src/TeamRosterHTML.js");
+const createPage = require('./src/TeamRoster.js');
 const fs = require('fs');
 
 const fullTeam = [];
@@ -14,7 +14,7 @@ const funcCallback = (err) => {
         console.error("An Error Has Occurred & The File Was Not Created!");
     }
 
-    console.log('Success! Team Roster File Has Been Created In The Src Folder');
+    console.log('Success! Team Roster File Has Been Created In The Dist Folder');
 }
 
 const createEng = () => {
@@ -92,23 +92,23 @@ const createEng = () => {
       },
 
     ]).then(createTeam => {
-        const engineer = new Engineer(createTeam.engName, createTeam.engID, createTeam.engEmail,createTeam.engGH);
+        const newEngineer = new Engineer(createTeam.engName, createTeam.engID, createTeam.engEmail,createTeam.engGH);
         if(createTeam.teamLst == "Engineer"){
-            fullTeam.push(engineer);
+            fullTeam.push(newEngineer);
             console.log(fullTeam);
             createEng();
         }
         else if (createTeam.teamLst == "Intern") {
-            fullTeam.push(engineer);
+            fullTeam.push(newEngineer);
             console.log(fullTeam)
             createIntern();
         }
         else {
-            fullTeam.push(engineer);
+            fullTeam.push(newEngineer.name, newEngineer.id,newEngineer.email, newEngineer.gitHub);
             console.log(fullTeam)
             //write the file
             const newTR = createPage(fullTeam);
-            fs.writeFile('./dist/TeamRoster.html', newTR, funcCallback);
+            //fs.writeFile('./dist/TeamRoster.html', newTR, funcCallback);
         }
        
     }
@@ -303,18 +303,35 @@ const createManager = () => {
 }
 
 createManager().then(createTeam => {
-    const manager = new Manager(createTeam.manName, createTeam.manID, createTeam.manEmail,createTeam.manON);
+    //const{name,ID, email,ON} = createTeam
+        //fullTeam.push(createTeam);
+    // const managerName = createTeam.manName
+    // const managerId = createTeam.manID
+    // const managerEmail = createTeam.manEmail
+    // const managerOfficeNumber = createTeam.manON;
+    //const manager = new Manager(managerName, managerId, managerEmail, managerOfficeNumber)
+    
+    const manager = new Manager(createTeam.manName,createTeam.manID, createTeam.manEmail,createTeam.manON);
+    //console.log('Values: ' + createTeam.manName,createTeam.manID, createTeam.manEmail,createTeam.manON);
+    //console.log(createTeam);
+    fullTeam.push(manager);
+    console.log(fullTeam);
+    //console.log('New Manager: ' + newManager);
+
+    
+    console.log('Team: ', fullTeam);
+
 
     if(createTeam.teamLst == "Engineer"){
-        fullTeam.push(manager);
+        //fullTeam.push(newManager);
         createEng();
     }
     else if (createTeam.teamLst == "Intern") {
-        fullTeam.push(manager);
+        //Start the Intern Creation Function
         createIntern();
     }
     else {
-        fullTeam.push(manager);
+                
         //write the file
         const newTR = createPage(fullTeam);
         fs.writeFile('./dist/TeamRoster.html', newTR, funcCallback);
